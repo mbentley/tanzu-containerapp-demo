@@ -1,0 +1,11 @@
+apiVersion: apps.tanzu.vmware.com/v1
+kind: ContainerApp
+metadata:
+  creationTimestamp: null
+  name: docker-demo-visual2
+spec:
+  image: harbor.mbentley.net/mbentley/docker-demo:visual-9999
+  replicas: 4
+  ports:
+  - name: main
+    port: 8080
