@@ -6,7 +6,9 @@ The environment of the fictional customer has the following requirements:
 
 ### Infrastructure Requirements
 
-1. There is a separate network team that is responsible for load balancer configuration.
+1. The platform team is able to deploy Avi (NSX ALB) for use within their private network but it doesn't extend beyond the private network.
+    * `<client>` -> `<network team LB>` -> `<platform team Avi LB>` -> `<k8s ingress/svc>`
+1. There is a separate network team that is responsible for load balancer configuration to go outside of the private network.
     * No automatic load balancer configuration is allowed on the load balancers that traffic must go through to get out of the private datacenter networks
     * A ticket must be submitted to configure a load balancer for both internet facing applications and internally available applications.
 1. There is a separate team responsible for DNS configuration.
@@ -15,8 +17,9 @@ The environment of the fictional customer has the following requirements:
 
 ### Application Requirements
 
-1. The application which needs to be deployed is managed by a third party vendor.
+1. The application which needs to be deployed is created and managed by a third party vendor.
     * They provide the application as container images which we can't modify or we will be on our own to support them.
+    * They typically provide k8s deployment YAML files for running the application
 
 ## Issues with the Example Use Case
 
