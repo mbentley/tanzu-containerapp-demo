@@ -1,0 +1,23 @@
+apiVersion: apps.tanzu.vmware.com/v1
+kind: ContainerApp
+metadata:
+  creationTimestamp: null
+  name: docker-demo-visual
+spec:
+  image: harbor.mbentley.net/mbentley/docker-demo:visual-9999
+  replicas: 1
+  ports:
+  - name: main
+    port: 8080
+---
+apiVersion: apps.tanzu.vmware.com/v1
+kind: ContainerApp
+metadata:
+  creationTimestamp: null
+  name: go-hostname
+spec:
+  image: harbor.mbentley.net/mbentley/go-hostname:9999
+  replicas: 1
+  ports:
+  - name: main
+    port: 8080
