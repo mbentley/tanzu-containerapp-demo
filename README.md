@@ -34,22 +34,6 @@ The environment of the fictional customer has the following requirements:
 
 ## Configuration & Deployment
 
-### Configuration
-
-Set `pod-security.kubernetes.io/enforce` to `privileged` for namespaces with a `spaces.tanzu.vmware.com/name` label:
-
-```bash
-tanzu operations apply -f ./policies/allow-privileged.yaml
-```
-
-Apply mutating policies to allow root and r/w filesystems for namespaces with a `spaces.tanzu.vmware.com/name` label:
-
-```bash
-tanzu operations apply -f ./policies/allow-root-and-rw-fs.yaml
-```
-
-### App Deployment
-
 Configure the build plan to use ucp (allowing for pre-built images to be used) and specify the registry path to put the containerapp definitions that are created:
 
 ```bash
@@ -63,3 +47,7 @@ Deploy the defined `ContainerApp`s:
 ```bash
 tanzu deploy -y
 ```
+
+## Tanzu Platform for Kubernetes Configuration
+
+I am going to put a full config in a [separate repo](https://github.com/mbentley/tanzu-platform-tools).
