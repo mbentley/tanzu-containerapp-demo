@@ -1,11 +1,33 @@
 apiVersion: apps.tanzu.vmware.com/v1
 kind: ContainerApp
 metadata:
-  creationTimestamp: null
   name: docker-demo-visual
 spec:
+  # this image runs as non-root
   image: harbor.mbentley.net/mbentley/docker-demo:visual-9999@sha256:42f1d8410b085bbb88e44d549b6ff8663b9a233f782c6acaa144092e1b7dc461
-  replicas: 1
+  # this image runs as root
+  #image: harbor.mbentley.net/mbentley/docker-demo:visual@sha256:d749c47ec475395b06b4a21b28f2050f0a08c6ee39e2906a105f6ca2b3e0b4b3
+  replicas: 2
   ports:
-  - name: main
+  - name: ddv
     port: 8080
+
+---
+
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  annotations:
+    apps.tanzu.vmware.com/promotable: ""
+    apps.tanzu.vmware.com/promote-group: ContainerApp/docker-demo-visual
+  name: ddv-http-route
+spec:
+  parentRefs:
+  - group: networking.tanzu.vmware.com
+    kind: Entrypoint
+    name: ddv
+  rules:
+  - backendRefs:
+    - kind: Service
+      name: docker-demo-visual
+      port: 8080

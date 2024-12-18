@@ -1,12 +1,12 @@
 apiVersion: apps.tanzu.vmware.com/v1
 kind: ContainerApp
 metadata:
-  name: go-hostname
+  name: nginx
 spec:
-  image: harbor.mbentley.net/mbentley/go-hostname:latest@sha256:66d37dc11abc4c02cc63479fccbcbd5eeda1851db84142e8455d7900ce794d1f
+  image: harbor.mbentley.net/mbentley/nginx-hostname@sha256:3bca3799c4cc304cecf578aeb8650cddb68973685dffc44a758a09c96bad401b
   replicas: 2
   ports:
-  - name: gh
+  - name: nginx
     port: 8080
 
 ---
@@ -16,15 +16,15 @@ kind: HTTPRoute
 metadata:
   annotations:
     apps.tanzu.vmware.com/promotable: ""
-    apps.tanzu.vmware.com/promote-group: ContainerApp/go-hostname
-  name: gh-http-route
+    apps.tanzu.vmware.com/promote-group: ContainerApp/nginx
+  name: nr-http-route
 spec:
   parentRefs:
   - group: networking.tanzu.vmware.com
     kind: Entrypoint
-    name: gh
+    name: nginx
   rules:
   - backendRefs:
     - kind: Service
-      name: go-hostname
+      name: nginx
       port: 8080

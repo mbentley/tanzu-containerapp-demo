@@ -38,6 +38,7 @@ Configure the build plan to use ucp (allowing for pre-built images to be used) a
 
 ```bash
 tanzu build config \
+  --build-engine platform \
   --build-plan-source-type=ucp \
   --containerapp-registry harbor.mbentley.net/mbentley/{name}
 ```
@@ -51,3 +52,26 @@ tanzu deploy -y
 ## Tanzu Platform for Kubernetes Configuration
 
 I am going to put a full config in a [separate repo](https://github.com/mbentley/tanzu-platform-tools).
+
+
+## Creating a ContainerApp from Init
+
+This is an example for a pre-defined image
+
+```bash
+tanzu app init
+tanzu app init test-capp --build-path . --build-type buildpacks --yes
+
+# edit the created .tanzu/config/test-capp.yml file
+#   add:
+#     image: harbor.mbentley.net/mbentley/docker-demo:visual-9999@sha256:42f1d8410b085bbb88e44d549b6ff8663b9a233f782c6acaa144092e1b7dc461
+#   remove:
+#     build:
+ns```
+
+```bash
+tanzu build config \
+  --build-engine daemon \
+  --build-plan-source-type=ucp \
+  --containerapp-registry harbor.mbentley.net/mbentley/{name}
+```
